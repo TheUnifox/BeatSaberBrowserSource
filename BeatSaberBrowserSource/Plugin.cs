@@ -18,7 +18,7 @@ namespace BeatSaberBrowserSource
         {
             Log = logger;
             PluginConfig.Instance = conf.Generated<PluginConfig>();
-            Log.Debug("BeatSaberBrowserSource initialized and config loaded");
+            Log.Info($"{meta.Name} {meta.HVersion} initialized.");
         }
 
 

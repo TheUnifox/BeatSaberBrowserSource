@@ -7,6 +7,6 @@
   "description": "A mod to add OBS like browser sources as panels in Beat Saber!",
   "gameVersion": "1.38.0",
   "dependsOn": {
-    "BSIPA": "^4.2.0"
+    "BSIPA": "^4.3.0"
   }
 }
