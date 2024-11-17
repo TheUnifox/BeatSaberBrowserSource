@@ -1,20 +1,21 @@
-﻿using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.Attributes;
+﻿using BeatSaberMarkupLanguage.Attributes;
 using HMUI;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using BeatSaberBrowserSource.Configuration;
 
 namespace BeatSaberBrowserSource.Menu
 {
     internal class BSBSSettingsMenu : MonoBehaviour
     {
         public const string MenuName = nameof(BeatSaberBrowserSource);
-        public const string ResourcePath = nameof(BeatSaberBrowserSource) + ".Menu.BSML.menu.bsml";
+        public const string ResourcePath = nameof(BeatSaberBrowserSource) + ".Menu.BSML.example.bsml";
 
-        [UIComponent("panel-list")]
-        private readonly List<PluginConfig.PanelInfo> panelList = null; //PluginConfig.Instance.PanelsConfig;
+        // [UIComponent] will get a specified component from the BSML object with the matching id
+        [UIComponent("example-image")]
+        private readonly ImageView exampleImage = null!;
+
+        [UIComponent("example-text")]
+        private readonly TextMeshProUGUI exampleText = null!;
 
         /// <summary>
         /// The #post-parse event is provided by BSML. This action is invoked after BSML has parsed this object and
@@ -30,7 +31,8 @@ namespace BeatSaberBrowserSource.Menu
         [UIAction("example-action")]
         private void ExampleAction()
         {
-            Plugin.Log.Debug("button pressed!");
+            exampleImage.color = Color.white;
+            exampleText.text = "Hello World!";
         }
     }
 }

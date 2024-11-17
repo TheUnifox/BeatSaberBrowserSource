@@ -1,48 +1,59 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BeatSaberMarkupLanguage.Util;
 using UnityEngine;
+using BeatSaberBrowserSource.Menu;
 
 namespace BeatSaberBrowserSource
 {
-    /// <summary>
-    /// Monobehaviours (scripts) are added to GameObjects.
-    /// For a full list of Messages a Monobehaviour can receive from the game, see https://docs.unity3d.com/ScriptReference/MonoBehaviour.html.
-    /// </summary>
-    public class BeatSaberBrowserSourceController : MonoBehaviour
-    {
-        public string panelname = "";
-        public string url = "";
+    // MonoBehaviours are scripts added to in-game GameObjects which execute code during runtime.
+    // For a full list of Messages a MonoBehaviour can receive from the game, refer to the Unity documentation.
+    // https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
 
-        // These methods are automatically called by Unity, you should remove any you aren't using.
-        #region Monobehaviour Messages
+    internal class BeatSaberBrowserSourceController : MonoBehaviour
+    {
+        public static BeatSaberBrowserSourceController Instance { get; private set; }
+
         /// <summary>
-        /// Only ever called once, mainly used to initialize variables.
+        /// Called a single time by Unity when this script is created.
         /// </summary>
         private void Awake()
         {
-            GameObject.DontDestroyOnLoad(this); // Don't destroy this object on scene changes
-            Plugin.Log?.Debug($"{name}: Starting panel {panelname}");
+            // For this particular MonoBehaviour, we only want one instance to exist at any time.
+            // Store a reference to it in a static property and destroy any that are created while one already exists.
+            if (Instance != null)
+            {
+                DestroyImmediate(this);
+                return;
+            }
+
+            DontDestroyOnLoad(this); // Don't destroy this object on scene changes
+            Instance = this;
+
+            // Invoked when the main menu scene loads, or loads fresh after applying settings.
+            // This is important for initializing objects in the menu, namely UI objects.
+            MainMenuAwaiter.MainMenuInitializing += MenuManager.AddSettingsMenu;
         }
+
         /// <summary>
-        /// Only ever called once on the first frame the script is Enabled. Start is called after any other script's Awake() and before Update().
+        /// Called a single time by Unity on the first frame the script is enabled.
         /// </summary>
         private void Start()
         {
-
+            Plugin.Log.Debug($"{name} started");
         }
 
         /// <summary>
-        /// Called every frame if the script is enabled.
+        /// Called a single time by Unity when the script is being destroyed.
         /// </summary>
-        private void Update()
+        private void OnDestroy()
         {
+            Plugin.Log.Debug($"{name} destroyed");
+            MainMenuAwaiter.MainMenuInitializing -= MenuManager.AddSettingsMenu;
 
+            if (Instance == this)
+            {
+                // This MonoBehaviour is being destroyed, so set the static instance property to null.
+                Instance = null;
+            }
         }
-        #endregion
     }
 }

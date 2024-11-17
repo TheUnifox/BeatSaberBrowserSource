@@ -1,40 +1,44 @@
-﻿using BeatSaberBrowserSource.Configuration;
-using UnityEngine;
-using IPA;
+﻿using IPA;
 using IPA.Config.Stores;
+using IPA.Loader;
+using UnityEngine;
 using IPALogger = IPA.Logging.Logger;
 using IPAConfig = IPA.Config.Config;
-using IPA.Loader;
+using BeatSaberBrowserSource.Configuration;
 
 namespace BeatSaberBrowserSource
 {
     [Plugin(RuntimeOptions.SingleStartInit)]
-    public class Plugin
+    internal class Plugin
     {
         internal static IPALogger Log { get; private set; }
 
-        [Init]
-        public Plugin(IPALogger logger, IPAConfig conf, PluginMetadata meta)
-        {
-            Log = logger;
-            PluginConfig.Instance = conf.Generated<PluginConfig>();
-            Log.Info($"{meta.Name} {meta.HVersion} initialized.");
-        }
+        // Methods with [Init] are called when the plugin is first loaded by IPA.
+        // All the parameters are provided by IPA and are optional.
+        // The constructor is called before any method with [Init]. Only use [Init] with one constructor.
 
+        [Init]
+        public Plugin(IPALogger ipaLogger, IPAConfig ipaConfig, PluginMetadata pluginMetadata)
+        {
+            Log = ipaLogger;
+
+            // Creates an instance of PluginConfig used by IPA to load and store config values
+            PluginConfig.Instance = ipaConfig.Generated<PluginConfig>();
+
+            Log.Info($"{pluginMetadata.Name} {pluginMetadata.HVersion} initialized.");
+        }
 
         [OnStart]
         public void OnApplicationStart()
         {
             Log.Debug("OnApplicationStart");
             new GameObject("BeatSaberBrowserSourceController").AddComponent<BeatSaberBrowserSourceController>();
-
         }
 
         [OnExit]
         public void OnApplicationQuit()
         {
             Log.Debug("OnApplicationQuit");
-
         }
     }
 }
