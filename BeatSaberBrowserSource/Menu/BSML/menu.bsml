@@ -1,0 +1,5 @@
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
+    <list id='panel-list' data='BSBSConfig.PanelInfo'>
+        <button text="Click Me" on-click="example-action"/>
+    </list>
+</bg>

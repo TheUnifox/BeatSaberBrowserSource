@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+  "id": "BeatSaberBrowserSource",
+  "name": "BeatSaberBrowserSource",
+  "author": "Unifox",
+  "version": "0.0.1",
+  "description": "A mod to add OBS like browser sources as panels in Beat Saber!",
+  "gameVersion": "1.38.0",
+  "dependsOn": {
+    "BSIPA": "^4.2.0"
+  }
+}
