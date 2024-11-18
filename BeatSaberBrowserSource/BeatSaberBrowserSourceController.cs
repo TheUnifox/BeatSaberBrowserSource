@@ -7,11 +7,11 @@ namespace BeatSaberBrowserSource
     // MonoBehaviours are scripts added to in-game GameObjects which execute code during runtime.
     // For a full list of Messages a MonoBehaviour can receive from the game, refer to the Unity documentation.
     // https://docs.unity3d.com/ScriptReference/MonoBehaviour.html
-
+    
     internal class BeatSaberBrowserSourceController : MonoBehaviour
     {
         public static BeatSaberBrowserSourceController Instance { get; private set; }
-
+        
         /// <summary>
         /// Called a single time by Unity when this script is created.
         /// </summary>
@@ -27,7 +27,7 @@ namespace BeatSaberBrowserSource
 
             DontDestroyOnLoad(this); // Don't destroy this object on scene changes
             Instance = this;
-
+            
             // Invoked when the main menu scene loads, or loads fresh after applying settings.
             // This is important for initializing objects in the menu, namely UI objects.
             MainMenuAwaiter.MainMenuInitializing += MenuManager.AddSettingsMenu;
@@ -48,7 +48,7 @@ namespace BeatSaberBrowserSource
         {
             Plugin.Log.Debug($"{name} destroyed");
             MainMenuAwaiter.MainMenuInitializing -= MenuManager.AddSettingsMenu;
-
+            
             if (Instance == this)
             {
                 // This MonoBehaviour is being destroyed, so set the static instance property to null.

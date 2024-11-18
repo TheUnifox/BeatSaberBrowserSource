@@ -1,6 +1,9 @@
 <bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'>
     <vertical>
-        <button text="Click Me" on-click="example-action"/>
+        <custom-list id='panel-list' clickable-cells='true' on-click='panel-item-click' contents='panel-list-contents'>
+            
+        </custom-list>
+        <button text="+" on-click="add-panel"/>
         <text id="example-text" text="" font-size="10" align="Center"/>
         <image id="example-image" src="#AvatarHandsIcon" preserve-aspect="true" img-color="#0000"/>
     </vertical>

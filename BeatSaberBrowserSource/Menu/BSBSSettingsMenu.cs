@@ -1,5 +1,7 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Attributes;
 using HMUI;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,8 +16,13 @@ namespace BeatSaberBrowserSource.Menu
         [UIComponent("example-image")]
         private readonly ImageView exampleImage = null!;
 
-        [UIComponent("example-text")]
+        [UIComponent("example-text")] 
         private readonly TextMeshProUGUI exampleText = null!;
+
+        private List<PluginConfig.PanelInfo> panelList = PluginConfig.Instance.PanelsConfig;
+
+        [UIValue("panel-list-contents")]
+        private List<string> panelNames = PluginConfig.Instance.PanelNames;
 
         /// <summary>
         /// The #post-parse event is provided by BSML. This action is invoked after BSML has parsed this object and
@@ -28,11 +35,23 @@ namespace BeatSaberBrowserSource.Menu
             Plugin.Log.Debug($"{name} parsed");
         }
 
-        [UIAction("example-action")]
-        private void ExampleAction()
+        [UIAction("add-panel")]
+        private void AddPanel()
         {
             exampleImage.color = Color.white;
             exampleText.text = "Hello World!";
+            if (PluginConfig.Instance.PanelsConfig == null) { PluginConfig.Instance.PanelsConfig = new List<PluginConfig.PanelInfo>(); }
+            if (PluginConfig.Instance.PanelNames == null) { PluginConfig.Instance.PanelNames = new List<string>(); }
+            PluginConfig.Instance.PanelsConfig.Add(new PluginConfig.PanelInfo());
+            PluginConfig.Instance.PanelNames.Add("New Panel");
+            panelList = PluginConfig.Instance.PanelsConfig;
+            panelNames = PluginConfig.Instance.PanelNames;
+        }
+
+        [UIAction("panel-item-click")]
+        private void PanelItemClick(string name)
+        {
+            exampleText.text = name;
         }
     }
 }
